@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Five-Colored Lotus</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e8ba3 100%);
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+
+        .lotus-container {
+            position: relative;
+            width: 500px;
+            height: 500px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lotus-center {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, #FFD700, #FFA500);
+            border-radius: 50%;
+            z-index: 10;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+        }
+
+        .petal {
+            position: absolute;
+            width: 120px;
+            height: 180px;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            transform-origin: center bottom;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+        }
+
+        .petal::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: inherit;
+            background: inherit;
+            opacity: 0;
+            transform: scale(1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Five colored petals */
+        .petal-red {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%) rotate(0deg);
+        }
+
+        .petal-yellow {
+            background: linear-gradient(135deg, #ffd93d, #f9ca24);
+            top: 50%;
+            right: 0;
+            transform: translate(40%, -50%) rotate(72deg);
+        }
+
+        .petal-blue {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            bottom: 30px;
+            right: 60px;
+            transform: rotate(144deg);
+        }
+
+        .petal-green {
+            background: linear-gradient(135deg, #43e97b, #38f9d7);
+            bottom: 30px;
+            left: 60px;
+            transform: rotate(216deg);
+        }
+
+        .petal-purple {
+            background: linear-gradient(135deg, #a8b5ff, #7b68ee);
+            top: 50%;
+            left: 0;
+            transform: translate(-40%, -50%) rotate(288deg);
+        }
+
+        /* Hover effects */
+        .petal:hover {
+            transform: scale(1.3);
+            opacity: 0.7;
+            z-index: 20;
+            filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.5));
+        }
+
+        .petal-red:hover {
+            transform: translateX(-50%) rotate(0deg) scale(1.3);
+        }
+
+        .petal-yellow:hover {
+            transform: translate(40%, -50%) rotate(72deg) scale(1.3);
+        }
+
+        .petal-blue:hover {
+            transform: rotate(144deg) scale(1.3);
+        }
+
+        .petal-green:hover {
+            transform: rotate(216deg) scale(1.3);
+        }
+
+        .petal-purple:hover {
+            transform: translate(-40%, -50%) rotate(288deg) scale(1.3);
+        }
+
+        /* Double-layer effect on hover */
+        .petal:hover::before {
+            opacity: 0.5;
+            transform: scale(1.15) translate(-5px, -5px);
+        }
+
+        /* Gentle floating animation */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .lotus-container {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        /* Title */
+        .title {
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            letter-spacing: 3px;
+            font-weight: 300;
+        }
+
+        /* Water ripples effect */
+        .water-ripple {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 150px;
+            background: radial-gradient(ellipse at center, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: ripple 3s ease-in-out infinite;
+        }
+
+        @keyframes ripple {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.3;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.5;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="title">Five-Colored Lotus</div>
+
+    <div class="lotus-container">
+        <div class="petal petal-red"></div>
+        <div class="petal petal-yellow"></div>
+        <div class="petal petal-blue"></div>
+        <div class="petal petal-green"></div>
+        <div class="petal petal-purple"></div>
+        <div class="lotus-center"></div>
+    </div>
+
+    <div class="water-ripple"></div>
+
+    <script>
+        // Add subtle interactive sparkle effect
+        document.querySelectorAll('.petal').forEach(petal => {
+            petal.addEventListener('mouseenter', function(e) {
+                this.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+            });
+
+            petal.addEventListener('mouseleave', function(e) {
+                this.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+            });
+        });
+    </script>
+</body>
+</html>
